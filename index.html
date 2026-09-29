@@ -11,7 +11,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
 
-  <!-- Google Pixel/Monospace Style Font -->
+  <!-- Google Pixel / Monospace Style Font -->
   <link
     href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@400;600&display=swap"
     rel="stylesheet"
@@ -34,7 +34,7 @@
       color: #fff;
     }
 
-    /* Background Media Layer */
+    /* Background Layer */
     #bg-container {
       position: absolute;
       top: 0;
@@ -56,25 +56,35 @@
       filter: brightness(0.65);
     }
 
-    /* Dark overlay/vignette */
     .bg-overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.85) 100%);
+      background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
       z-index: 2;
     }
 
-    /* Landing Screen Overlay ("Click Me") */
+    /* Snow Canvas Layer */
+    #snow-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Landing Screen Overlay ("click me") */
     #click-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.92);
+      background: rgba(0, 0, 0, 0.94);
       backdrop-filter: blur(8px);
       z-index: 999;
       display: flex;
@@ -118,10 +128,10 @@
       letter-spacing: 1.5px;
     }
 
-    /* Main Container */
+    /* Main Card Layout */
     .main-wrapper {
       position: relative;
-      z-index: 3;
+      z-index: 4;
       width: 100%;
       height: 100%;
       display: flex;
@@ -130,36 +140,35 @@
       padding: 20px;
     }
 
-    /* Profile Card Styling */
     .profile-card {
       width: 100%;
-      max-width: 360px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border-radius: 16px;
-      padding: 24px 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      max-width: 320px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 16px;
+      gap: 14px;
     }
 
     /* Header Section (Name + Badges) */
     .profile-header {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .profile-name {
       font-family: 'VT323', monospace;
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 400;
       color: #fff;
       letter-spacing: 1px;
+      line-height: 1;
     }
 
     .badges-container {
@@ -168,23 +177,33 @@
       gap: 6px;
     }
 
+    .badge-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .badge-icon {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       object-fit: contain;
-      filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.4));
+    }
+
+    .badge-fa {
+      font-size: 0.9rem;
+      color: #8b9bb4;
     }
 
     .verified-icon {
-      color: #3b82f6;
+      color: #5865f2;
       font-size: 0.95rem;
     }
 
     /* Bio Section */
     .profile-bio {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.4;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.3;
     }
 
     /* Links Section */
@@ -192,8 +211,7 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-top: 4px;
+      gap: 8px;
     }
 
     .link-item {
@@ -201,19 +219,19 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 10px 14px;
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
       color: rgba(255, 255, 255, 0.85);
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       transition: all 0.2s ease;
     }
 
     .link-item:hover {
       background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.2);
       color: #fff;
     }
 
@@ -224,12 +242,33 @@
     }
 
     .link-left i {
-      font-size: 1rem;
+      font-size: 0.9rem;
+      width: 14px;
+      text-align: center;
     }
 
     .link-arrow {
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Touch / Click Ripple Effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.15);
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0);
+      animation: ripple-animation 0.6s ease-out forwards;
+      z-index: 9999;
+    }
+
+    @keyframes ripple-animation {
+      to {
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -237,6 +276,9 @@
 
   <!-- Audio Element -->
   <audio id="bg-audio" loop></audio>
+
+  <!-- Canvas for Falling Snow -->
+  <canvas id="snow-canvas"></canvas>
 
   <!-- Background Media -->
   <div id="bg-container">
@@ -252,7 +294,7 @@
     <div class="click-hint">• TAP ANYWHERE</div>
   </div>
 
-  <!-- Profile Card Container -->
+  <!-- Main Profile Card Container -->
   <div class="main-wrapper">
     <div class="profile-card">
       
@@ -272,38 +314,36 @@
   </div>
 
   <script>
-    // Config Object
+    // Configuration Object
     const profileConfig = {
       name: "camel",
       verified: true,
-      bio: "Digital Nomad • Cyber Aesthetic",
+      bio: "", // Optional bio text
 
-      // Overlay Screen text
+      // Overlay Screen Text
       overlayTitle: "click me",
       overlaySub: "camel",
 
-      // 1. BACKGROUND VIDEO OR PHOTO (Auto-detects mp4/mov or image format)
+      // 1. BACKGROUND VIDEO OR PHOTO (Auto-detects video vs image)
       bgMediaUrl: "https://your-video-host.com/background.mp4", 
 
-      // 2. BACKGROUND SONG
+      // 2. BACKGROUND SONG DIRECT LINK
       musicUrl: "https://your-audio-host.com/track.mp3",
-      trackTitle: "Song Name",
-      artistName: "Artist",
 
-      // 3. BADGES
+      // 3. BADGES (Supports FontAwesome icons OR image URLs)
       badges: [
-        { name: "Badge 1", icon: "https://your-image-host.com/badge1.png" },
-        { name: "Badge 2", icon: "https://your-image-host.com/badge2.png" }
+        { name: "Discord", icon: "fa-brands fa-discord" },
+        { name: "Verified", icon: "fa-solid fa-check-circle" },
+        { name: "Custom Image", icon: "https://your-image-host.com/badge3.png" }
       ],
 
       // 4. SOCIAL LINKS
       links: [
-        { title: "tg", url: "https://t.me/yourlink", icon: "fa-paper-plane" },
+        { title: "tg", url: "https://t.me/yourlink", icon: "fa-brands fa-telegram" },
         { title: "ig", url: "https://instagram.com/yourname", icon: "fa-brands fa-instagram" }
       ]
     };
 
-    // Render Data to Page
     document.addEventListener("DOMContentLoaded", () => {
       // Set Name
       document.getElementById("profile-name").textContent = profileConfig.name;
@@ -315,6 +355,7 @@
       // Render Badges
       const badgesContainer = document.getElementById("badges-container");
       
+      // Add Verified Badge if true
       if (profileConfig.verified) {
         const verifiedIcon = document.createElement("i");
         verifiedIcon.className = "fa-solid fa-circle-check verified-icon";
@@ -322,27 +363,43 @@
         badgesContainer.appendChild(verifiedIcon);
       }
 
+      // Add Badges dynamically
       if (Array.isArray(profileConfig.badges)) {
         profileConfig.badges.forEach(b => {
-          if (b.icon) {
+          if (!b.icon) return;
+
+          const span = document.createElement("span");
+          span.className = "badge-item";
+          span.title = b.name || "";
+
+          // Check if icon is an Image URL or FontAwesome Icon Class
+          if (b.icon.startsWith("http://") || b.icon.startsWith("https://") || b.icon.startsWith("/")) {
             const img = document.createElement("img");
             img.src = b.icon;
             img.alt = b.name || "Badge";
             img.className = "badge-icon";
-            badgesContainer.appendChild(img);
+            span.appendChild(img);
+          } else {
+            const i = document.createElement("i");
+            let iconClass = b.icon;
+            if (!iconClass.includes("fa-")) iconClass = "fa-solid fa-" + iconClass;
+            i.className = iconClass + " badge-fa";
+            span.appendChild(i);
           }
+
+          badgesContainer.appendChild(span);
         });
       }
 
       // Render Bio
       const bioEl = document.getElementById("profile-bio");
-      if (profileConfig.bio) {
+      if (profileConfig.bio && profileConfig.bio.trim() !== "") {
         bioEl.textContent = profileConfig.bio;
       } else {
         bioEl.style.display = "none";
       }
 
-      // Render Links
+      // Render Social Links
       const linksContainer = document.getElementById("links-container");
       if (Array.isArray(profileConfig.links)) {
         profileConfig.links.forEach(link => {
@@ -351,7 +408,6 @@
           a.target = "_blank";
           a.className = "link-item";
 
-          // Icon class handler (defaults to brand or standard solid icon)
           let iconClass = link.icon;
           if (!iconClass.includes("fa-")) {
             iconClass = "fa-solid fa-" + iconClass;
@@ -387,7 +443,7 @@
         audio.src = profileConfig.musicUrl;
       }
 
-      // Click Screen Handler (Plays music & unlocks audio on user gesture)
+      // Click Overlay Screen Trigger
       const clickScreen = document.getElementById("click-screen");
       clickScreen.addEventListener("click", () => {
         clickScreen.classList.add("hidden");
@@ -399,9 +455,71 @@
         }
       });
     });
+
+    /* --- SMOOTH FALLING SNOW EFFECT --- */
+    const canvas = document.getElementById("snow-canvas");
+    const ctx = canvas.getContext("2d");
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const flakes = Array.from({ length: 65 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 1.8 + 0.6,
+      density: Math.random() * 1 + 0.5,
+      opacity: Math.random() * 0.6 + 0.2,
+    }));
+
+    function renderSnow() {
+      ctx.clearRect(0, 0, width, height);
+
+      flakes.forEach(flake => {
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+        ctx.fill();
+
+        flake.y += flake.density * 0.8;
+        flake.x += Math.sin(flake.y / 30) * 0.3;
+
+        if (flake.y > height) {
+          flake.y = -5;
+          flake.x = Math.random() * width;
+        }
+      });
+
+      requestAnimationFrame(renderSnow);
+    }
+    renderSnow();
+
+    /* --- TOUCH / CLICK RIPPLE EFFECT --- */
+    function createRipple(e) {
+      const ripple = document.createElement("div");
+      ripple.className = "ripple";
+      
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      ripple.style.left = `${clientX}px`;
+      ripple.style.top = `${clientY}px`;
+      ripple.style.width = "35px";
+      ripple.style.height = "35px";
+
+      document.body.appendChild(ripple);
+
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    }
+
+    window.addEventListener("click", createRipple);
+    window.addEventListener("touchstart", createRipple, { passive: true });
   </script>
 </body>
 </html>
-
-
-
