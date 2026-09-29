@@ -1,5 +1,5 @@
 const profileConfig = {
-  name: "Your Name",
+  name: "skiddai",
   verified: true,
   bio: "Digital Nomad • Cyber Aesthetic",
 
