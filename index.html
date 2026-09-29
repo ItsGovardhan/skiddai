@@ -8,6 +8,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="config.js"></script>
   <style>
+    /* Fullscreen Fixed Canvas for Falling Snow Particles */
+    #snowCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Video/Image Background */
     .bg-media {
       position: fixed;
       top: 0;
@@ -16,45 +28,44 @@
       height: 100vh;
       object-fit: cover;
       z-index: -1;
-      filter: brightness(0.35);
+      filter: brightness(0.25);
     }
   </style>
 </head>
-<body class="bg-neutral-950 text-white min-h-screen flex items-center justify-center p-4 font-sans select-none overflow-hidden">
+<body class="bg-neutral-950 text-white min-h-screen flex items-center justify-center p-4 font-sans select-none overflow-hidden relative">
 
-  <!-- Background Video -->
+  <!-- Fullscreen Background Video -->
   <video id="bgVideo" autoplay loop muted playsinline class="bg-media">
     <source id="bgSource" src="" type="video/mp4" />
   </video>
 
-  <!-- Tap to Enter Overlay (Required for Audio Autoplay on Mobile) -->
+  <!-- Canvas Overlay for Snowy Falling Particles -->
+  <canvas id="snowCanvas"></canvas>
+
+  <!-- Tap to Enter Screen -->
   <div id="overlay" onclick="enterSite()" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center cursor-pointer transition-opacity duration-500">
     <p class="text-xs tracking-[0.3em] uppercase text-neutral-300 animate-pulse font-light">Click / Tap to Enter</p>
   </div>
 
-  <!-- Profile Card -->
-  <div class="relative z-10 w-full max-w-xs bg-neutral-900/50 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 shadow-2xl text-center space-y-4">
+  <!-- Main Profile Glass Card -->
+  <div class="relative z-10 w-full max-w-xs bg-neutral-900/40 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 shadow-[0_0_50px_rgba(0,0,0,0.8)] text-center space-y-4">
     
     <!-- Avatar -->
     <div class="relative w-20 h-20 mx-auto">
-      <img id="avatar" src="" alt="Avatar" class="w-full h-full object-cover rounded-full border-2 border-white/20 shadow-lg" />
+      <img id="avatar" src="" alt="Avatar" class="w-full h-full object-cover rounded-full border-2 border-white/20 shadow-xl" />
     </div>
 
     <!-- Name, Bio & Discord Badges -->
     <div>
-      <h1 class="text-lg font-bold flex items-center justify-center gap-1.5" id="profileName">
-        <!-- JS populates name -->
-      </h1>
+      <h1 class="text-lg font-bold flex items-center justify-center gap-1.5" id="profileName"></h1>
       <p id="profileBio" class="text-xs text-neutral-400 mt-0.5"></p>
       
       <!-- Badges Row -->
-      <div id="badgesContainer" class="flex items-center justify-center gap-1.5 mt-2 bg-black/30 w-fit mx-auto px-2.5 py-1 rounded-full border border-white/5">
-        <!-- JS populates badges -->
-      </div>
+      <div id="badgesContainer" class="flex items-center justify-center gap-2 mt-2.5 bg-black/40 w-fit mx-auto px-3 py-1 rounded-full border border-white/10 shadow-inner"></div>
     </div>
 
-    <!-- Audio Player Widget -->
-    <div class="bg-black/40 border border-white/5 rounded-xl p-2.5 flex items-center justify-between gap-2">
+    <!-- Audio Player Bar -->
+    <div class="bg-black/50 border border-white/10 rounded-xl p-2.5 flex items-center justify-between gap-2 shadow-sm">
       <div class="text-left truncate">
         <p id="trackTitle" class="text-xs font-semibold truncate">Title</p>
         <p id="artistName" class="text-[10px] text-neutral-400 truncate">Artist</p>
@@ -65,9 +76,7 @@
     </div>
 
     <!-- Links List -->
-    <div id="linksContainer" class="space-y-2">
-      <!-- JS populates social buttons -->
-    </div>
+    <div id="linksContainer" class="space-y-2"></div>
 
   </div>
 
@@ -75,7 +84,7 @@
   <audio id="bgAudio" loop></audio>
 
   <script>
-    // Initialize UI from config.js
+    // 1. Populate UI from config.js
     document.getElementById('bgSource').src = profileConfig.bgMediaUrl;
     document.getElementById('bgVideo').load();
     document.getElementById('avatar').src = profileConfig.avatarUrl;
@@ -84,7 +93,7 @@
     document.getElementById('artistName').innerText = profileConfig.artistName;
     document.getElementById('bgAudio').src = profileConfig.musicUrl;
 
-    // Render Name & Verification
+    // Render Name & Verification Badge
     const nameElem = document.getElementById('profileName');
     nameElem.innerHTML = `${profileConfig.name} ${profileConfig.verified ? '<i class="fa-solid fa-circle-check text-blue-400 text-xs"></i>' : ''}`;
 
@@ -94,11 +103,11 @@
       const img = document.createElement('img');
       img.src = badge.icon;
       img.title = badge.name;
-      img.className = "w-4 h-4 object-contain";
+      img.className = "w-4 h-4 object-contain drop-shadow";
       badgesElem.appendChild(img);
     });
 
-    // Render Links
+    // Render Social Links
     const linksElem = document.getElementById('linksContainer');
     profileConfig.links.forEach(link => {
       const a = document.createElement('a');
@@ -109,7 +118,7 @@
       linksElem.appendChild(a);
     });
 
-    // Audio & Overlay Logic
+    // 2. Interactive Audio & Overlay Controls
     const audio = document.getElementById('bgAudio');
     const playIcon = document.getElementById('playIcon');
 
@@ -129,7 +138,62 @@
         playIcon.className = "fa-solid fa-play text-xs";
       }
     }
+
+    // 3. Falling Snowy Drops Canvas Animation
+    const canvas = document.getElementById('snowCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const maxParticles = 60; // Adjust density of snowy drops
+
+    for (let i = 0; i < maxParticles; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 2 + 0.5,
+        speedY: Math.random() * 1.2 + 0.5,
+        speedX: Math.random() * 0.4 - 0.2,
+        opacity: Math.random() * 0.7 + 0.3
+      });
+    }
+
+    function animateSnow() {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = "rgba(255, 255, 255, 0.8)";
+        ctx.fill();
+
+        p.y += p.speedY;
+        p.x += p.speedX;
+
+        // Reset particle to top when reaching bottom
+        if (p.y > height) {
+          p.y = -5;
+          p.x = Math.random() * width;
+        }
+        if (p.x > width) p.x = 0;
+        if (p.x < 0) p.x = width;
+      });
+
+      requestAnimationFrame(animateSnow);
+    }
+
+    animateSnow();
   </script>
 </body>
 </html>
+
 
