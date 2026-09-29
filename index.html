@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050505">
+  <title>ItsGovardhan</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #050505;
+      color: white;
+    }
+
+    body {
+      cursor: default;
+    }
+
+    /* Background */
+    .background {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,.07), transparent 35%),
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,.025), transparent 30%),
+        #050505;
+      z-index: -3;
+    }
+
+    .background::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .055;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,.5) 0,
+          rgba(255,255,255,.5) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      pointer-events: none;
+    }
+
+    /* Moving glow */
+    .glow {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.025);
+      filter: blur(100px);
+      animation: moveGlow 12s infinite alternate ease-in-out;
+      z-index: -2;
+    }
+
+    @keyframes moveGlow {
+      from {
+        transform: translate(-100px, -50px);
+      }
+      to {
+        transform: translate(calc(100vw - 300px), calc(100vh - 350px));
+      }
+    }
+
+    /* Enter screen */
+    #enterScreen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #050505;
+      z-index: 100;
+      transition: opacity .7s ease, visibility .7s ease;
+    }
+
+    #enterScreen.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .enter {
+      color: #aaa;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .enter:hover {
+      color: white;
+      transform: scale(1.04);
+    }
+
+    /* Main */
+    #main {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    #main.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .profile {
+      width: min(430px, 100%);
+      text-align: center;
+    }
+
+    /* Avatar */
+    .avatar-wrap {
+      width: 92px;
+      height: 92px;
+      margin: 0 auto 18px;
+      padding: 3px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #fff, #444, #111);
+      box-shadow: 0 0 35px rgba(255,255,255,.08);
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      background: #111;
+    }
+
+    /* Name */
+    .name {
+      font-size: 25px;
+      font-weight: 700;
+      letter-spacing: -.7px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .verified {
+      width: 17px;
+      height: 17px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #fff;
+      color: #000;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .username {
+      color: #777;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .bio {
+      color: #b8b8b8;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 15px auto 18px;
+      max-width: 360px;
+    }
+
+    /* Badges */
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      width: 30px;
+      height: 30px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.035);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #ddd;
+      transition: .25s;
+    }
+
+    .badge:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.08);
+    }
+
+    /* Discord presence */
+    .discord {
+      display: flex;
+      align-items: center;
+      text-align: left;
+      gap: 12px;
+      padding: 13px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.035);
+      border-radius: 14px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(15px);
+    }
+
+    .discord-avatar {
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #181818;
+    }
+
+    .discord-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .discord-name {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .discord-status {
+      margin-top: 3px;
+      color: #888;
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .online {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #6cff9b;
+      box-shadow: 0 0 10px rgba(108,255,155,.5);
+    }
+
+    /* Links */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .link {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-decoration: none;
+      color: #ddd;
+      border: 1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.035);
+      border-radius: 13px;
+      font-size: 13px;
+      transition: .25s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .link:hover {
+      color: white;
+      background: rgba(255,255,255,.075);
+      border-color: rgba(255,255,255,.14);
+      transform: translateY(-2px);
+    }
+
+    .link-icon {
+      position: absolute;
+      left: 17px;
+      font-size: 16px;
+      color: #aaa;
+    }
+
+    /* Music */
+    .music {
+      margin-top: 12px;
+      padding: 11px 13px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.035);
+      border-radius: 13px;
+      backdrop-filter: blur(12px);
+    }
+
+    .music-cover {
+      width: 35px;
+      height: 35px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #222, #666);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .music-info {
+      flex: 1;
+      text-align: left;
+      overflow: hidden;
+    }
+
+    .music-title {
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .music-artist {
+      font-size: 10px;
+      color: #777;
+      margin-top: 3px;
+    }
+
+    .music button {
+      border: 0;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 15px;
+      color: #555;
+      font-size: 10px;
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      .profile {
+        width: min(380px, 100%);
+      }
+
+      .name {
+        font-size: 23px;
+      }
+
+      .avatar-wrap {
+        width: 82px;
+        height: 82px;
+      }
+
+      .bio {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="background"></div>
+  <div class="glow"></div>
+
+  <!-- Enter Screen -->
+  <div id="enterScreen">
+    <div class="enter" onclick="enterSite()">Click to enter</div>
+  </div>
+
+  <!-- Website -->
+  <main id="main">
+    <section class="profile">
+
+      <!-- CHANGE AVATAR -->
+      <div class="avatar-wrap">
+        <img
+          class="avatar"
+          src="https://cdn.discordapp.com/embed/avatars/0.png"
+          alt="Avatar"
+        >
+      </div>
+
+      <div class="name">
+        ItsGovardhan
+        <span class="verified">✓</span>
+      </div>
+
+      <div class="username">@itsgovardhan</div>
+
+      <p class="bio">
+        Developer • Discord enthusiast<br>
+        Building things I actually enjoy.
+      </p>
+
+      <!-- Badges -->
+      <div class="badges">
+        <div class="badge" title="Developer">⌘</div>
+        <div class="badge" title="Discord">◉</div>
+        <div class="badge" title="Verified">✓</div>
+        <div class="badge" title="Music">♫</div>
+      </div>
+
+      <!-- Discord -->
+      <div class="discord">
+        <img
+          class="discord-avatar"
+          src="https://cdn.discordapp.com/embed/avatars/0.png"
+          alt="Discord"
+        >
+
+        <div class="discord-info">
+          <div class="discord-name">ItsGovardhan</div>
+          <div class="discord-status">Online • Building something...</div>
+        </div>
+
+        <div class="online"></div>
+      </div>
+
+      <!-- Links -->
+      <div class="links">
+
+        <a class="link" href="https://discord.com" target="_blank">
+          <span class="link-icon">◉</span>
+          Discord
+        </a>
+
+        <a class="link" href="https://github.com/ItsGovardhan" target="_blank">
+          <span class="link-icon">⌘</span>
+          GitHub
+        </a>
+
+        <a class="link" href="#" target="_blank">
+          <span class="link-icon">◎</span>
+          Instagram
+        </a>
+
+      </div>
+
+      <!-- Music -->
+      <div class="music">
+        <div class="music-cover">♫</div>
+
+        <div class="music-info">
+          <div class="music-title">Your Song</div>
+          <div class="music-artist">Your Artist</div>
+        </div>
+
+        <button id="musicButton" onclick="toggleMusic()">▶</button>
+      </div>
+
+      <div class="footer">
+        idkwhy.lol • 2026
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Put your MP3 URL here -->
+  <audio id="audio" loop>
+    <source src="" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const enterScreen = document.getElementById("enterScreen");
+    const main = document.getElementById("main");
+    const audio = document.getElementById("audio");
+    const musicButton = document.getElementById("musicButton");
+
+    function enterSite() {
+      enterScreen.classList.add("hide");
+
+      setTimeout(() => {
+        main.classList.add("show");
+      }, 250);
+
+      // Music will only play if an audio source is added.
+      if (audio.querySelector("source").src) {
+        audio.play().then(() => {
+          musicButton.textContent = "Ⅱ";
+        }).catch(() => {});
+      }
+    }
+
+    function toggleMusic() {
+      if (!audio.querySelector("source").src) {
+        alert("Add your MP3 URL inside the <audio> section first.");
+        return;
+      }
+
+      if (audio.paused) {
+        audio.play();
+        musicButton.textContent = "Ⅱ";
+      } else {
+        audio.pause();
+        musicButton.textContent = "▶";
+      }
+    }
+  </script>
+
+</body>
+</html>
