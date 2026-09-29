@@ -3,197 +3,405 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="config.js"></script>
+  <title>Profile Card</title>
+
+  <!-- Font Awesome Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
+  <!-- Google Pixel/Monospace Style Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
-    /* Fullscreen Fixed Canvas for Falling Snow Particles */
-    #snowCanvas {
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+
+    /* Background Media Layer */
+    #bg-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    #bg-video, #bg-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+      filter: brightness(0.65);
+    }
+
+    /* Dark overlay/vignette */
+    .bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.85) 100%);
+      z-index: 2;
+    }
+
+    /* Landing Screen Overlay ("Click Me") */
+    #click-screen {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    #click-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
       pointer-events: none;
     }
 
-    /* Video/Image Background */
-    .bg-media {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -1;
-      filter: brightness(0.25);
+    .click-title {
+      font-family: 'VT323', monospace;
+      font-size: 2.2rem;
+      letter-spacing: 3px;
+      color: #fff;
+      text-transform: lowercase;
+      margin-bottom: 10px;
+    }
+
+    .click-sub {
+      font-family: 'VT323', monospace;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 80px;
+    }
+
+    .click-hint {
+      position: absolute;
+      bottom: 40px;
+      font-family: 'VT323', monospace;
+      font-size: 0.85rem;
+      color: #666;
+      letter-spacing: 1.5px;
+    }
+
+    /* Main Container */
+    .main-wrapper {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Profile Card Styling */
+    .profile-card {
+      width: 100%;
+      max-width: 360px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-radius: 16px;
+      padding: 24px 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    /* Header Section (Name + Badges) */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .profile-name {
+      font-family: 'VT323', monospace;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .badges-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-icon {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.4));
+    }
+
+    .verified-icon {
+      color: #3b82f6;
+      font-size: 0.95rem;
+    }
+
+    /* Bio Section */
+    .profile-bio {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.4;
+    }
+
+    /* Links Section */
+    .links-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .link-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+
+    .link-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .link-left i {
+      font-size: 1rem;
+    }
+
+    .link-arrow {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.4);
     }
   </style>
 </head>
-<body class="bg-neutral-950 text-white min-h-screen flex items-center justify-center p-4 font-sans select-none overflow-hidden relative">
-
-  <!-- Fullscreen Background Video -->
-  <video id="bgVideo" autoplay loop muted playsinline class="bg-media">
-    <source id="bgSource" src="" type="video/mp4" />
-  </video>
-
-  <!-- Canvas Overlay for Snowy Falling Particles -->
-  <canvas id="snowCanvas"></canvas>
-
-  <!-- Tap to Enter Screen -->
-  <div id="overlay" onclick="enterSite()" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center cursor-pointer transition-opacity duration-500">
-    <p class="text-xs tracking-[0.3em] uppercase text-neutral-300 animate-pulse font-light">Click / Tap to Enter</p>
-  </div>
-
-  <!-- Main Profile Glass Card -->
-  <div class="relative z-10 w-full max-w-xs bg-neutral-900/40 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 shadow-[0_0_50px_rgba(0,0,0,0.8)] text-center space-y-4">
-    
-    <!-- Avatar -->
-    <div class="relative w-20 h-20 mx-auto">
-      <img id="avatar" src="" alt="Avatar" class="w-full h-full object-cover rounded-full border-2 border-white/20 shadow-xl" />
-    </div>
-
-    <!-- Name, Bio & Discord Badges -->
-    <div>
-      <h1 class="text-lg font-bold flex items-center justify-center gap-1.5" id="profileName"></h1>
-      <p id="profileBio" class="text-xs text-neutral-400 mt-0.5"></p>
-      
-      <!-- Badges Row -->
-      <div id="badgesContainer" class="flex items-center justify-center gap-2 mt-2.5 bg-black/40 w-fit mx-auto px-3 py-1 rounded-full border border-white/10 shadow-inner"></div>
-    </div>
-
-    <!-- Audio Player Bar -->
-    <div class="bg-black/50 border border-white/10 rounded-xl p-2.5 flex items-center justify-between gap-2 shadow-sm">
-      <div class="text-left truncate">
-        <p id="trackTitle" class="text-xs font-semibold truncate">Title</p>
-        <p id="artistName" class="text-[10px] text-neutral-400 truncate">Artist</p>
-      </div>
-      <button onclick="toggleAudio()" class="bg-white/10 hover:bg-white/20 p-2 rounded-full w-8 h-8 flex items-center justify-center transition active:scale-95">
-        <i id="playIcon" class="fa-solid fa-pause text-xs"></i>
-      </button>
-    </div>
-
-    <!-- Links List -->
-    <div id="linksContainer" class="space-y-2"></div>
-
-  </div>
+<body>
 
   <!-- Audio Element -->
-  <audio id="bgAudio" loop></audio>
+  <audio id="bg-audio" loop></audio>
+
+  <!-- Background Media -->
+  <div id="bg-container">
+    <video id="bg-video" autoplay loop muted playsinline></video>
+    <img id="bg-image" alt="Background" />
+    <div class="bg-overlay"></div>
+  </div>
+
+  <!-- Entry Screen Overlay -->
+  <div id="click-screen">
+    <div class="click-title" id="overlay-title">click me</div>
+    <div class="click-sub" id="overlay-sub">camel</div>
+    <div class="click-hint">• TAP ANYWHERE</div>
+  </div>
+
+  <!-- Profile Card Container -->
+  <div class="main-wrapper">
+    <div class="profile-card">
+      
+      <!-- Name & Badges -->
+      <div class="profile-header">
+        <span class="profile-name" id="profile-name">camel</span>
+        <div class="badges-container" id="badges-container"></div>
+      </div>
+
+      <!-- Bio -->
+      <div class="profile-bio" id="profile-bio"></div>
+
+      <!-- Social Links -->
+      <div class="links-list" id="links-container"></div>
+
+    </div>
+  </div>
 
   <script>
-    // 1. Populate UI from config.js
-    document.getElementById('bgSource').src = profileConfig.bgMediaUrl;
-    document.getElementById('bgVideo').load();
-    document.getElementById('avatar').src = profileConfig.avatarUrl;
-    document.getElementById('profileBio').innerText = profileConfig.bio;
-    document.getElementById('trackTitle').innerText = profileConfig.trackTitle;
-    document.getElementById('artistName').innerText = profileConfig.artistName;
-    document.getElementById('bgAudio').src = profileConfig.musicUrl;
+    // Config Object
+    const profileConfig = {
+      name: "camel",
+      verified: true,
+      bio: "Digital Nomad • Cyber Aesthetic",
 
-    // Render Name & Verification Badge
-    const nameElem = document.getElementById('profileName');
-    nameElem.innerHTML = `${profileConfig.name} ${profileConfig.verified ? '<i class="fa-solid fa-circle-check text-blue-400 text-xs"></i>' : ''}`;
+      // Overlay Screen text
+      overlayTitle: "click me",
+      overlaySub: "camel",
 
-    // Render Badges
-    const badgesElem = document.getElementById('badgesContainer');
-    profileConfig.badges.forEach(badge => {
-      const img = document.createElement('img');
-      img.src = badge.icon;
-      img.title = badge.name;
-      img.className = "w-4 h-4 object-contain drop-shadow";
-      badgesElem.appendChild(img);
-    });
+      // 1. BACKGROUND VIDEO OR PHOTO (Auto-detects mp4/mov or image format)
+      bgMediaUrl: "https://your-video-host.com/background.mp4", 
 
-    // Render Social Links
-    const linksElem = document.getElementById('linksContainer');
-    profileConfig.links.forEach(link => {
-      const a = document.createElement('a');
-      a.href = link.url;
-      a.target = "_blank";
-      a.className = "block py-2.5 px-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-medium transition duration-200 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2";
-      a.innerHTML = `<i class="${link.icon}"></i> ${link.title}`;
-      linksElem.appendChild(a);
-    });
+      // 2. BACKGROUND SONG
+      musicUrl: "https://your-audio-host.com/track.mp3",
+      trackTitle: "Song Name",
+      artistName: "Artist",
 
-    // 2. Interactive Audio & Overlay Controls
-    const audio = document.getElementById('bgAudio');
-    const playIcon = document.getElementById('playIcon');
+      // 3. BADGES
+      badges: [
+        { name: "Badge 1", icon: "https://your-image-host.com/badge1.png" },
+        { name: "Badge 2", icon: "https://your-image-host.com/badge2.png" }
+      ],
 
-    function enterSite() {
-      const overlay = document.getElementById('overlay');
-      overlay.classList.add('opacity-0');
-      setTimeout(() => overlay.style.display = 'none', 500);
-      audio.play().catch(err => console.log(err));
-    }
+      // 4. SOCIAL LINKS
+      links: [
+        { title: "tg", url: "https://t.me/yourlink", icon: "fa-paper-plane" },
+        { title: "ig", url: "https://instagram.com/yourname", icon: "fa-brands fa-instagram" }
+      ]
+    };
 
-    function toggleAudio() {
-      if (audio.paused) {
-        audio.play();
-        playIcon.className = "fa-solid fa-pause text-xs";
-      } else {
-        audio.pause();
-        playIcon.className = "fa-solid fa-play text-xs";
+    // Render Data to Page
+    document.addEventListener("DOMContentLoaded", () => {
+      // Set Name
+      document.getElementById("profile-name").textContent = profileConfig.name;
+
+      // Overlay text
+      document.getElementById("overlay-title").textContent = profileConfig.overlayTitle || "click me";
+      document.getElementById("overlay-sub").textContent = profileConfig.overlaySub || profileConfig.name;
+
+      // Render Badges
+      const badgesContainer = document.getElementById("badges-container");
+      
+      if (profileConfig.verified) {
+        const verifiedIcon = document.createElement("i");
+        verifiedIcon.className = "fa-solid fa-circle-check verified-icon";
+        verifiedIcon.title = "Verified";
+        badgesContainer.appendChild(verifiedIcon);
       }
-    }
 
-    // 3. Falling Snowy Drops Canvas Animation
-    const canvas = document.getElementById('snowCanvas');
-    const ctx = canvas.getContext('2d');
+      if (Array.isArray(profileConfig.badges)) {
+        profileConfig.badges.forEach(b => {
+          if (b.icon) {
+            const img = document.createElement("img");
+            img.src = b.icon;
+            img.alt = b.name || "Badge";
+            img.className = "badge-icon";
+            badgesContainer.appendChild(img);
+          }
+        });
+      }
 
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+      // Render Bio
+      const bioEl = document.getElementById("profile-bio");
+      if (profileConfig.bio) {
+        bioEl.textContent = profileConfig.bio;
+      } else {
+        bioEl.style.display = "none";
+      }
 
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
+      // Render Links
+      const linksContainer = document.getElementById("links-container");
+      if (Array.isArray(profileConfig.links)) {
+        profileConfig.links.forEach(link => {
+          const a = document.createElement("a");
+          a.href = link.url;
+          a.target = "_blank";
+          a.className = "link-item";
 
-    const particles = [];
-    const maxParticles = 60; // Adjust density of snowy drops
+          // Icon class handler (defaults to brand or standard solid icon)
+          let iconClass = link.icon;
+          if (!iconClass.includes("fa-")) {
+            iconClass = "fa-solid fa-" + iconClass;
+          }
 
-    for (let i = 0; i < maxParticles; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: Math.random() * 2 + 0.5,
-        speedY: Math.random() * 1.2 + 0.5,
-        speedX: Math.random() * 0.4 - 0.2,
-        opacity: Math.random() * 0.7 + 0.3
-      });
-    }
+          a.innerHTML = `
+            <div class="link-left">
+              <i class="${iconClass}"></i>
+              <span>.${link.title}</span>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square link-arrow"></i>
+          `;
+          linksContainer.appendChild(a);
+        });
+      }
 
-    function animateSnow() {
-      ctx.clearRect(0, 0, width, height);
+      // Setup Background Media
+      const bgVideo = document.getElementById("bg-video");
+      const bgImage = document.getElementById("bg-image");
+      const url = profileConfig.bgMediaUrl || "";
 
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
-        ctx.shadowBlur = 6;
-        ctx.shadowColor = "rgba(255, 255, 255, 0.8)";
-        ctx.fill();
+      if (url.match(/\.(mp4|webm|ogg|mov)$/i)) {
+        bgVideo.src = url;
+        bgVideo.style.display = "block";
+      } else if (url !== "") {
+        bgImage.src = url;
+        bgImage.style.display = "block";
+      }
 
-        p.y += p.speedY;
-        p.x += p.speedX;
+      // Setup Audio
+      const audio = document.getElementById("bg-audio");
+      if (profileConfig.musicUrl) {
+        audio.src = profileConfig.musicUrl;
+      }
 
-        // Reset particle to top when reaching bottom
-        if (p.y > height) {
-          p.y = -5;
-          p.x = Math.random() * width;
+      // Click Screen Handler (Plays music & unlocks audio on user gesture)
+      const clickScreen = document.getElementById("click-screen");
+      clickScreen.addEventListener("click", () => {
+        clickScreen.classList.add("hidden");
+        if (profileConfig.musicUrl) {
+          audio.play().catch(err => console.log("Audio play error:", err));
         }
-        if (p.x > width) p.x = 0;
-        if (p.x < 0) p.x = width;
+        if (bgVideo.src) {
+          bgVideo.play().catch(err => console.log("Video play error:", err));
+        }
       });
-
-      requestAnimationFrame(animateSnow);
-    }
-
-    animateSnow();
+    });
   </script>
 </body>
 </html>
+
 
 
