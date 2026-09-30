@@ -8,7 +8,7 @@ const CONFIG = {
     backgroundUrl: "assets/bg.jpg",
 
     // Background Music (.mp3)
-musicUrl: "https://raw.githubusercontent.com/ItsGovardhan/socialbiodesign1/main/assets/music.mp3",
+musicUrl: "https://raw.githubusercontent.com/ItsGovardhan/socialbiodesign1/main/assets/music.mp4",
 
     // Custom Badges Next To Username
     badges: [
