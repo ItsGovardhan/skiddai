@@ -1,7 +1,7 @@
 const CONFIG = {
     // Profile Identity
     username: "skiddai",
-    subtitle: "G A M E L",
+    subtitle: "D E V",
 
     // Background Media ("image" or "video")
     backgroundType: "image",
@@ -19,8 +19,8 @@ const CONFIG = {
 
     // Social Media Links (Leave as "" to hide)
     socials: {
-        telegram: "https://t.me/yourusername",
-        discord: "https://discord.gg/yourinvite",
-        instagram: "https://instagram.com/yourusername"
+        telegram: "",
+        discord: "https://discord.gg/globexd",
+        instagram: ""
     }
 };
