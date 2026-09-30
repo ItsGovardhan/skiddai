@@ -68,18 +68,17 @@
     <script src="config.js"></script>
 
     <script>
-        // 1. Fallback configuration to ensure the site never locks up
         const SafeConfig = (typeof CONFIG !== "undefined") ? CONFIG : {
             username: "skiddai",
-            subtitle: "",
+            subtitle: "D E V",
             backgroundType: "image",
-            backgroundUrl: "",
-            musicUrl: "",
+            backgroundUrl: "assets/bg.jpg",
+            musicUrl: "assets/music.mp3",
             badges: [],
             socials: {}
         };
 
-        // 2. Background Initialization
+        // Background Initialization
         const bgLayer = document.getElementById('bg-layer');
         if (SafeConfig.backgroundType === "video" && SafeConfig.backgroundUrl) {
             const videoElem = document.createElement('video');
@@ -96,11 +95,11 @@
             bgLayer.style.backgroundImage = `url('${SafeConfig.backgroundUrl}')`;
         }
 
-        // 3. Subtitle & Username
-        if (SafeConfig.subtitle) document.getElementById('overlay-sub').textContent = SafeConfig.subtitle;
-        if (SafeConfig.username) document.getElementById('display-username').textContent = SafeConfig.username;
+        // Subtitle & Username
+        document.getElementById('overlay-sub').textContent = SafeConfig.subtitle || "";
+        document.getElementById('display-username').textContent = SafeConfig.username || "";
 
-        // 4. Render Badges
+        // Render Badges
         const badgesContainer = document.getElementById('badges-container');
         if (SafeConfig.badges && Array.isArray(SafeConfig.badges)) {
             SafeConfig.badges.forEach(badgePath => {
@@ -113,7 +112,7 @@
             });
         }
 
-        // 5. Setup Social Buttons safely
+        // Setup Social Buttons
         const setupSocial = (elementId, linkUrl) => {
             const btn = document.getElementById(elementId);
             if (btn) {
@@ -132,14 +131,14 @@
             setupSocial('btn-instagram', SafeConfig.socials.instagram);
         }
 
-        // 6. Music playback
+        // Audio Setup
         let audio = null;
         if (SafeConfig.musicUrl && SafeConfig.musicUrl.trim() !== "") {
             audio = new Audio(SafeConfig.musicUrl);
             audio.loop = true;
         }
 
-        // 7. Overlay click listener (unconditional transition)
+        // Overlay Click Event
         const overlay = document.getElementById('overlay');
         const mainCard = document.getElementById('main-card');
 
@@ -147,11 +146,11 @@
             overlay.classList.add('hidden');
             mainCard.classList.add('visible');
             if (audio) {
-                audio.play().catch(e => console.log("Audio play error:", e));
+                audio.play().catch(e => console.log(e));
             }
         });
 
-        // 8. Snow Canvas Animation
+        // Snow Canvas Animation
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
 
