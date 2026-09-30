@@ -1,25 +1,23 @@
 const CONFIG = {
     // Profile Identity
-    username: "camel",
+    username: "skiddai",
     subtitle: "G A M E L",
 
-    // Background Media Configuration
-    // Set type to "video" or "image"
+    // Background Media Configuration ("video" or "image")
     backgroundType: "video", 
-    // Paste video path (e.g., "./assets/bg.mp4") or image URL/path
-    backgroundUrl: "./assets/bg.mp4", 
+    backgroundUrl: "assets/bg.mp4", // Change to "assets/bg.jpg" if using image
 
-    // Audio / Music Link (Direct MP3, Audio Stream URL)
+    // Audio / Music Link
     musicUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
 
-    // Up to 3 Badges (Add paths to images, or leave empty string "" to hide)
+    // Badges (Ensure these files exist in your assets/ folder)
     badges: [
-        "./assets/badge1.png",
-        "./assets/badge2.png",
-        "./assets/badge3.png"
+        "assets/badge1.png",
+        "assets/badge2.png",
+        "assets/badge3.png"
     ],
 
-    // Social Links (Leave empty string "" to automatically hide the card)
+    // Social Links (Leave as "" to auto-hide)
     socials: {
         telegram: "https://t.me/yourusername",
         discord: "https://discord.gg/yourinvite",
