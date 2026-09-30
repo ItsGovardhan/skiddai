@@ -20,6 +20,6 @@ musicUrl: "/assets/music.mp3",
     // Social Media Links (Leave as "" to hide)
     socials: {
         telegram: "",
-        discord: "https://discord.gg/globexd",
+        discord: "https://discord.gg/gNufp2zyc",
         instagram: ""
     }
