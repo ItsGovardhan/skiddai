@@ -9,7 +9,7 @@ const profileConfig = {
   
   // 2. BACKGROUND VIDEO OR PHOTO
   // Put your background MP4 video link (or background photo URL) here:
-  bgMediaUrl: "https://cdn.discordapp.com/attachments/1542213744288075818/1554584681335226398/From_Klickpin.com-_Fresh_short_reflections_for_people_who_love_beauty_for_daily_inspiration_to_save_and_share_today-pin-id-758152918536151269.mp4?ex=6abd6b4e&is=6abc19ce&hm=52d9289b00b4dcc20cbcd1baea4645e69d1ba445c3a0735d31f6d22d29a50485&", 
+  bgMediaUrl: "https://files.catbox.moe/6iesrm.mp4", 
 
   // 3. BACKGROUND SONG
   // Put your song MP3 direct link here:
