@@ -17,7 +17,7 @@ body, html {
     font-family: 'Press Start 2P', monospace, sans-serif;
 }
 
-/* Background layer with slight blur and brightness adjustment */
+/* Background Layer with subtle blur */
 #bg-layer {
     position: fixed;
     top: 0;
@@ -26,7 +26,7 @@ body, html {
     height: 100vh;
     z-index: 1;
     overflow: hidden;
-    filter: brightness(0.65) blur(2.5px);
+    filter: brightness(0.7) blur(2px);
 }
 
 #bg-layer.img-bg {
@@ -42,7 +42,7 @@ body, html {
     pointer-events: none;
 }
 
-/* Falling particles canvas */
+/* Canvas Particle Effect */
 #snow-canvas {
     position: fixed;
     top: 0;
@@ -53,7 +53,7 @@ body, html {
     pointer-events: none;
 }
 
-/* Tap to enter overlay */
+/* Tap To Enter Screen */
 #overlay {
     position: fixed;
     top: 0;
@@ -80,7 +80,7 @@ body, html {
 
 .overlay-title {
     font-family: 'Press Start 2P', monospace;
-    font-size: 1.1rem;
+    font-size: 1rem;
     letter-spacing: 2px;
     margin-bottom: 12px;
     text-transform: lowercase;
@@ -90,7 +90,7 @@ body, html {
 
 .overlay-sub {
     font-family: 'Press Start 2P', monospace;
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     letter-spacing: 2px;
     opacity: 0.6;
     text-transform: uppercase;
@@ -99,7 +99,7 @@ body, html {
 .tap-hint {
     font-family: 'Press Start 2P', monospace;
     margin-top: 40px;
-    font-size: 0.5rem;
+    font-size: 0.45rem;
     letter-spacing: 2px;
     opacity: 0.4;
     animation: pulse 2s infinite;
@@ -110,18 +110,18 @@ body, html {
     50% { opacity: 0.7; }
 }
 
-/* Main bio card container */
+/* Main Profile Card - Slightly Decreased Scale */
 #main-card {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.92);
+    transform: translate(-50%, -50%) scale(0.9);
     z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%;
-    max-width: 320px;
+    width: 88%;
+    max-width: 290px;
     opacity: 0;
     transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -131,27 +131,27 @@ body, html {
     transform: translate(-50%, -50%) scale(1);
 }
 
-/* Profile header & badges */
+/* Header & Badges */
 .profile-header {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 28px;
+    margin-bottom: 22px;
     width: 100%;
 }
 
-/* Metallic shining grey text */
+/* Username - Decreased Font Size */
 .username {
     font-family: 'Press Start 2P', monospace;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     letter-spacing: 1px;
     background: linear-gradient(
         110deg,
         #7a7a7a 0%,
-        #ffffff 30%,
+        #ffffff 35%,
         #e0e0e0 50%,
-        #636363 70%,
+        #636363 65%,
         #ffffff 100%
     );
     background-size: 200% auto;
@@ -159,7 +159,7 @@ body, html {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: metallicShine 3.5s linear infinite;
-    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
 }
 
 @keyframes metallicShine {
@@ -170,29 +170,32 @@ body, html {
 .badges-container {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 }
 
+/* Badges with Glowing Outline */
 .badge-icon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     object-fit: contain;
     display: inline-block;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 8px rgba(180, 200, 255, 0.6));
 }
 
-/* Semi-invisible glass buttons */
+/* Social Buttons Container */
 .social-buttons {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
+/* Slightly smaller, well-proportioned card design */
 .social-btn {
     font-family: 'Press Start 2P', monospace;
     width: 100%;
-    padding: 8px 12px;
-    border-radius: 16px;
+    padding: 6px 10px;
+    border-radius: 14px;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -207,22 +210,22 @@ body, html {
 
 .social-btn:hover {
     background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.28);
     transform: translateY(-2px);
 }
 
 .btn-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
-/* Dark semi-invisible square icon box matching screenshot */
+/* Dark semi-invisible icon box matching screenshot */
 .ss-icon-box {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
     background: rgba(0, 0, 0, 0.45);
-    border-radius: 12px;
+    border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
@@ -231,21 +234,21 @@ body, html {
 }
 
 .ss-icon-box svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     fill: #ffffff;
 }
 
 .btn-label {
     font-family: 'Press Start 2P', monospace;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     color: #ffffff;
     letter-spacing: 1px;
 }
 
 .arrow-icon {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     opacity: 0.5;
     fill: #ffffff;
 }
