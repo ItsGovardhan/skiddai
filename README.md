@@ -1,53 +1,44 @@
-
-# 🎮 Pixel Glass Bio Link
+# 🎮 Social Bio Link
 
 A minimalist, retro pixel-styled bio profile link page featuring translucent glassmorphic cards, custom badges, falling particle effects, and background music support.
 
+***Made with ❤️ by skiddai***
+
 ---
 
-## ⚡ Quick Customization (`config.js`)
+# 📸 Live Preview
 
-You do not need to edit any HTML or CSS code to customize your profile. Simply open `config.js` and update your details:
+> 🔗 **Live Demo:** [View Live Site](https://your-site.vercel.app) *(Replace with your live link)*
 
-```javascript
-const CONFIG = {
-    // 1. Profile Identity
-    username: "camel",          // Your main handle/display name
-    subtitle: "click me",        // Text shown on the overlay screen
+---
 
-    // 2. Background Settings ("image" or "video")
-    backgroundType: "image",
-    backgroundUrl: "https://your-image-url.com/bg.jpg", // Local path or web URL
+# 🚀 How to Make & Deploy Your Own Site on Vercel
 
-    // 3. Audio Track (.mp3 file link)
-    musicUrl: "",
+Follow these steps to log in, connect your code, and host your live site for free:
 
-    // 4. Badges (Icons next to username)
-    badges: [
-        "https://cdn-icons-png.flaticon.com/512/616/616489.png",
-        "https://cdn-icons-png.flaticon.com/512/1828/1828640.png"
-    ],
+## 🔑 Step 1: Create or Log in to Vercel
 
-    // 5. Social Links (Leave as "" to hide a button)
-    socials: {
-        telegram: "https://t.me/yourusername",
-        discord: "https://discord.gg/yourinvite",
-        instagram: "https://instagram.com/yourusername"
-    }
-};
+1. Go to [vercel.com](https://vercel.com).
+2. Click **Sign Up** (or **Log In** if you already have an account).
+3. Select **Continue with GitHub** to log in using your GitHub credentials.
 
-🚀 How to Make & Deploy Your Own Site on Vercel
-​Follow these steps to log in, connect your code, and host your live site for free:
-​Step 1: Create or Log in to Vercel
-​Go to vercel.com.
-​Click Sign Up (or Log In if you already have an account).
-​Select Continue with GitHub to log in using your GitHub credentials.
-​Step 2: Deploy Your Site
-​Make sure your GitHub repository contains index.html, styles.css, config.js, and README.md.
-​Go to your Vercel Dashboard.
-​Click the Add New... button in the top right and select Project.
-​Under Import Git Repository, find your repository and click Import.
-​Leave the Framework Preset as Other (since this is a static HTML/CSS/JS site).
-​Click Deploy.
-​Wait ~15 seconds—Vercel will give you a live domain link (e.g., your-site.vercel.app).
-​💡 Auto-Updates: Whenever you edit your config.js file directly on GitHub, Vercel will automatically re-deploy your site in seconds!
+---
+
+## 📦 Step 2: Deploy Your Site
+
+1. Make sure your GitHub repository contains `index.html`, `styles.css`, `config.js`, and `README.md`.
+2. Go to your **Vercel Dashboard**.
+3. Click the **Add New...** button in the top right and select **Project**.
+4. Under **Import Git Repository**, find your repository and click **Import**.
+5. Leave the **Framework Preset** as **Other** (since this is a static HTML/CSS/JS site).
+6. Click **Deploy**.
+7. Wait ~15 seconds—Vercel will give you a live domain link (e.g., `your-site.vercel.app`).
+
+> 💡 **Auto-Updates:** Whenever you push code or updates directly to GitHub, Vercel will automatically re-deploy your site in seconds!
+
+---
+
+# 👤 Author & Credits
+
+* **Created by:** **skiddai**
+* **License:** Open Source / Free to use
