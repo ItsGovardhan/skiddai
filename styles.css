@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     user-select: none;
     -webkit-user-select: none;
 }
@@ -13,15 +14,16 @@ body, html {
     overflow: hidden;
     background-color: #000;
     color: #fff;
+    font-family: 'Press Start 2P', monospace, sans-serif;
 }
 
-/* Background Layer (Image or Video) */
+/* Background Layer */
 #bg-layer {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: 1;
     overflow: hidden;
     filter: brightness(0.65);
@@ -37,9 +39,10 @@ body, html {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    pointer-events: none;
 }
 
-/* Canvas Floating Particle Effect */
+/* Falling Particles Canvas */
 #snow-canvas {
     position: fixed;
     top: 0;
@@ -50,7 +53,7 @@ body, html {
     pointer-events: none;
 }
 
-/* Blur Overlay Entry Screen */
+/* Entry Overlay Screen */
 #overlay {
     position: fixed;
     top: 0;
@@ -76,25 +79,27 @@ body, html {
 }
 
 .overlay-title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: 4px;
-    margin-bottom: 8px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
     text-transform: lowercase;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .overlay-sub {
-    font-size: 0.75rem;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
     letter-spacing: 2px;
     opacity: 0.5;
     text-transform: uppercase;
 }
 
 .tap-hint {
+    font-family: 'Press Start 2P', monospace;
     margin-top: 40px;
-    font-size: 0.65rem;
-    letter-spacing: 3px;
+    font-size: 0.5rem;
+    letter-spacing: 2px;
     opacity: 0.4;
     animation: pulse 2s infinite;
 }
@@ -104,7 +109,7 @@ body, html {
     50% { opacity: 0.6; }
 }
 
-/* Main Profile Card Overlay */
+/* Profile Card */
 #main-card {
     position: fixed;
     top: 50%;
@@ -125,32 +130,35 @@ body, html {
     transform: translate(-50%, -50%) scale(1);
 }
 
-/* Profile Header & Badges */
+/* Header & Badges */
 .profile-header {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 12px;
     margin-bottom: 24px;
+    width: 100%;
 }
 
 .username {
-    font-size: 2.2rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
 }
 
 .badges-container {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
 
 .badge-icon {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     object-fit: contain;
-    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+    display: inline-block;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
 }
 
 /* Social Link Cards */
@@ -162,6 +170,7 @@ body, html {
 }
 
 .social-btn {
+    font-family: 'Inter', sans-serif;
     width: 100%;
     padding: 14px 18px;
     border-radius: 12px;
@@ -198,7 +207,7 @@ body, html {
 
 .btn-label {
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
