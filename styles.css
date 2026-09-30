@@ -80,7 +80,7 @@ body, html {
 
 .overlay-title {
     font-family: 'Press Start 2P', monospace;
-    font-size: 1rem;
+    font-size: 0.9rem;
     letter-spacing: 2px;
     margin-bottom: 12px;
     text-transform: lowercase;
@@ -90,7 +90,7 @@ body, html {
 
 .overlay-sub {
     font-family: 'Press Start 2P', monospace;
-    font-size: 0.55rem;
+    font-size: 0.5rem;
     letter-spacing: 2px;
     opacity: 0.6;
     text-transform: uppercase;
@@ -99,7 +99,7 @@ body, html {
 .tap-hint {
     font-family: 'Press Start 2P', monospace;
     margin-top: 40px;
-    font-size: 0.45rem;
+    font-size: 0.4rem;
     letter-spacing: 2px;
     opacity: 0.4;
     animation: pulse 2s infinite;
@@ -110,73 +110,56 @@ body, html {
     50% { opacity: 0.7; }
 }
 
-/* Main Profile Card - Slightly Decreased Scale */
+/* Main Profile Card Container */
 #main-card {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%);
     z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 88%;
-    max-width: 290px;
+    width: 85%;
+    max-width: 270px;
     opacity: 0;
     transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #main-card.visible {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%);
 }
 
-/* Header & Badges */
+/* Header & Badges Layout */
 .profile-header {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
     width: 100%;
 }
 
-/* Username - Decreased Font Size */
+/* Smaller Username - Static White Color (No Color Slide Animation) */
 .username {
     font-family: 'Press Start 2P', monospace;
-    font-size: 1.2rem;
+    font-size: 1rem;
     letter-spacing: 1px;
-    background: linear-gradient(
-        110deg,
-        #7a7a7a 0%,
-        #ffffff 35%,
-        #e0e0e0 50%,
-        #636363 65%,
-        #ffffff 100%
-    );
-    background-size: 200% auto;
-    color: #e0e0e0;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: metallicShine 3.5s linear infinite;
-    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
-}
-
-@keyframes metallicShine {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .badges-container {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
 }
 
-/* Badges with Glowing Outline */
+/* Badges with Glowing Aura */
 .badge-icon {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     object-fit: contain;
     display: inline-block;
     filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 8px rgba(180, 200, 255, 0.6));
@@ -190,16 +173,16 @@ body, html {
     gap: 10px;
 }
 
-/* Slightly smaller, well-proportioned card design */
+/* Semi-Invisible Outer Cards (Matching Screenshot) */
 .social-btn {
     font-family: 'Press Start 2P', monospace;
     width: 100%;
     padding: 6px 10px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -209,9 +192,9 @@ body, html {
 }
 
 .social-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.28);
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
 }
 
 .btn-left {
@@ -220,13 +203,13 @@ body, html {
     gap: 10px;
 }
 
-/* Dark semi-invisible icon box matching screenshot */
+/* Dark Grey Square Icon Box */
 .ss-icon-box {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     background: rgba(0, 0, 0, 0.45);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -234,21 +217,22 @@ body, html {
 }
 
 .ss-icon-box svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     fill: #ffffff;
 }
 
+/* Decreased Text Size for Inside Button Labels */
 .btn-label {
     font-family: 'Press Start 2P', monospace;
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     color: #ffffff;
     letter-spacing: 1px;
 }
 
 .arrow-icon {
-    width: 12px;
-    height: 12px;
-    opacity: 0.5;
+    width: 11px;
+    height: 11px;
+    opacity: 0.4;
     fill: #ffffff;
 }
