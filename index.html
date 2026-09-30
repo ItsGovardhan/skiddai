@@ -122,17 +122,11 @@
         setupSocial('btn-instagram', CONFIG.socials.instagram);
 
         // Music playback
-let audio = null;
-
-if (CONFIG.musicUrl && CONFIG.musicUrl.trim() !== "") {
-    audio = document.createElement("audio");
-    audio.src = CONFIG.musicUrl;
-    audio.loop = true;
-    audio.preload = "auto";
-    audio.volume = 1.0;
-    audio.setAttribute("playsinline", "");
-    document.body.appendChild(audio);
-}
+        let audio = null;
+        if (CONFIG.musicUrl && CONFIG.musicUrl.trim() !== "") {
+            audio = new Audio(CONFIG.musicUrl);
+            audio.loop = true;
+        }
 
         const overlay = document.getElementById('overlay');
         const mainCard = document.getElementById('main-card');
