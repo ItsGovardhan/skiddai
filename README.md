@@ -34,3 +34,19 @@ const CONFIG = {
         instagram: "[https://instagram.com/yourusername](https://instagram.com/yourusername)"
     }
 };
+🚀 How to Make & Deploy Your Own Site on Vercel
+​Follow these steps to log in, connect your code, and host your live website for free using Vercel.
+​Step 1: Create or Log In to Vercel
+​Go to vercel.com.
+​Click Sign Up (or Log In if you already have an account).
+​Select Continue with GitHub. Log in with your GitHub credentials to link both accounts seamlessly.
+​Step 2: Deploy Your Site
+​Option A: Deploy via GitHub Repository (Recommended)
+​Make sure your GitHub repository contains index.html, styles.css, config.js, and README.md.
+​Go to your Vercel Dashboard.
+​Click the Add New... button in the top right and select Project.
+​Under Import Git Repository, find your repository and click Import.
+​Leave the Framework Preset as Other (since this is static HTML/CSS/JS).
+​Click Deploy.
+​Wait ~15 seconds—Vercel will give you a live domain link (e.g., your-name.vercel.app).
+​💡 Auto-Updates: Whenever you edit your config.js file directly on GitHub and commit changes, Vercel will automatically re-deploy your website with the updates!
