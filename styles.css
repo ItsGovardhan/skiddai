@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 * {
     margin: 0;
@@ -17,7 +17,7 @@ body, html {
     font-family: 'Press Start 2P', monospace, sans-serif;
 }
 
-/* Dynamic Background Layer */
+/* Background layer with slight blur and brightness adjustment */
 #bg-layer {
     position: fixed;
     top: 0;
@@ -26,7 +26,7 @@ body, html {
     height: 100vh;
     z-index: 1;
     overflow: hidden;
-    filter: brightness(0.65);
+    filter: brightness(0.65) blur(2.5px);
 }
 
 #bg-layer.img-bg {
@@ -42,7 +42,7 @@ body, html {
     pointer-events: none;
 }
 
-/* Canvas Particle Effect */
+/* Falling particles canvas */
 #snow-canvas {
     position: fixed;
     top: 0;
@@ -53,7 +53,7 @@ body, html {
     pointer-events: none;
 }
 
-/* Tap To Enter Screen */
+/* Tap to enter overlay */
 #overlay {
     position: fixed;
     top: 0;
@@ -61,8 +61,8 @@ body, html {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     z-index: 100;
     display: flex;
     flex-direction: column;
@@ -85,7 +85,7 @@ body, html {
     margin-bottom: 12px;
     text-transform: lowercase;
     color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .overlay-sub {
@@ -110,7 +110,7 @@ body, html {
     50% { opacity: 0.7; }
 }
 
-/* Main Bio Container */
+/* Main bio card container */
 #main-card {
     position: fixed;
     top: 50%;
@@ -121,7 +121,7 @@ body, html {
     flex-direction: column;
     align-items: center;
     width: 90%;
-    max-width: 360px;
+    max-width: 320px;
     opacity: 0;
     transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -131,49 +131,56 @@ body, html {
     transform: translate(-50%, -50%) scale(1);
 }
 
-/* Glowing Profile Username & Badges */
+/* Profile header & badges */
 .profile-header {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 24px;
+    gap: 8px;
+    margin-bottom: 28px;
     width: 100%;
 }
 
+/* Metallic shining grey text */
 .username {
     font-family: 'Press Start 2P', monospace;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     letter-spacing: 1px;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.5);
-    animation: glow 3s ease-in-out infinite alternate;
+    background: linear-gradient(
+        110deg,
+        #7a7a7a 0%,
+        #ffffff 30%,
+        #e0e0e0 50%,
+        #636363 70%,
+        #ffffff 100%
+    );
+    background-size: 200% auto;
+    color: #e0e0e0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: metallicShine 3.5s linear infinite;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
 }
 
-@keyframes glow {
-    from {
-        text-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 15px rgba(255, 255, 255, 0.3);
-    }
-    to {
-        text-shadow: 0 0 14px rgba(255, 255, 255, 1), 0 0 28px rgba(255, 255, 255, 0.7);
-    }
+@keyframes metallicShine {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
 }
 
 .badges-container {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .badge-icon {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     object-fit: contain;
     display: inline-block;
-    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
 }
 
-/* Glassmorphism Social Buttons */
+/* Semi-invisible glass buttons */
 .social-buttons {
     width: 100%;
     display: flex;
@@ -182,25 +189,24 @@ body, html {
 }
 
 .social-btn {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Press Start 2P', monospace;
     width: 100%;
-    padding: 14px 18px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    padding: 8px 12px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     display: flex;
     align-items: center;
     justify-content: space-between;
     text-decoration: none;
-    color: #fff;
-    transition: all 0.3s ease;
+    color: #ffffff;
+    transition: all 0.25s ease;
 }
 
 .social-btn:hover {
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.12);
     border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
 }
@@ -211,15 +217,29 @@ body, html {
     gap: 12px;
 }
 
-.btn-icon {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
+/* Dark semi-invisible square icon box matching screenshot */
+.ss-icon-box {
+    width: 42px;
+    height: 42px;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ss-icon-box svg {
+    width: 20px;
+    height: 20px;
+    fill: #ffffff;
 }
 
 .btn-label {
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.75rem;
+    color: #ffffff;
     letter-spacing: 1px;
 }
 
@@ -227,5 +247,5 @@ body, html {
     width: 14px;
     height: 14px;
     opacity: 0.5;
-    fill: currentColor;
+    fill: #ffffff;
 }
