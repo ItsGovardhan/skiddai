@@ -35,6 +35,7 @@ const CONFIG = {
         instagram: "https://instagram.com/yourusername"
     }
 };
+
 🚀 How to Make & Deploy Your Own Site on Vercel
 ​Follow these steps to log in, connect your code, and host your live site for free:
 ​Step 1: Create or Log in to Vercel
