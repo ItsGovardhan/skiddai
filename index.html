@@ -14,14 +14,14 @@
     <!-- Falling Particle Canvas -->
     <canvas id="snow-canvas"></canvas>
 
-    <!-- Tap To Enter Screen -->
+    <!-- Tap To Enter Overlay -->
     <div id="overlay">
         <div class="overlay-title" id="overlay-title">click me</div>
         <div class="overlay-sub" id="overlay-sub"></div>
         <div class="tap-hint">+ TAP ANYWHERE</div>
     </div>
 
-    <!-- Main Bio Interface -->
+    <!-- Main Profile Card -->
     <div id="main-card">
         <div class="profile-header">
             <span class="username" id="display-username"></span>
@@ -58,12 +58,12 @@
         </div>
     </div>
 
-    <!-- Script Configuration Load -->
+    <!-- Script Configuration -->
     <script src="config.js"></script>
 
-    <!-- Main Engine Logic -->
+    <!-- Main Logic -->
     <script>
-        // Load Background (Handles Video or Image)
+        // Load Background (Supports both video and photo)
         const bgLayer = document.getElementById('bg-layer');
 
         if (CONFIG.backgroundType === "video") {
@@ -74,20 +74,21 @@
             videoElem.loop = true;
             videoElem.muted = true;
             videoElem.playsInline = true;
-            
-            // Try playing video explicitly
-            videoElem.play().catch(err => console.log("Video autoplay log:", err));
+            videoElem.setAttribute("muted", "");
+            videoElem.setAttribute("playsinline", "");
             bgLayer.appendChild(videoElem);
+
+            videoElem.play().catch(e => console.log("Autoplay log:", e));
         } else {
             bgLayer.classList.add('img-bg');
             bgLayer.style.backgroundImage = `url('${CONFIG.backgroundUrl}')`;
         }
 
-        // Set Texts
+        // Populates Header Text
         document.getElementById('overlay-sub').textContent = CONFIG.subtitle;
         document.getElementById('display-username').textContent = CONFIG.username;
 
-        // Load Badges Safely
+        // Render Badges
         const badgesContainer = document.getElementById('badges-container');
         if (CONFIG.badges && Array.isArray(CONFIG.badges)) {
             CONFIG.badges.forEach(badgePath => {
@@ -95,15 +96,12 @@
                     const img = document.createElement('img');
                     img.src = badgePath;
                     img.className = 'badge-icon';
-                    img.onerror = () => {
-                        console.warn("Could not load badge image at path:", badgePath);
-                    };
                     badgesContainer.appendChild(img);
                 }
             });
         }
 
-        // Setup Social Buttons
+        // Render Social Buttons (Hides if string is empty "")
         const setupSocial = (elementId, linkUrl) => {
             const btn = document.getElementById(elementId);
             if (linkUrl && linkUrl.trim() !== "") {
@@ -111,6 +109,7 @@
                 btn.style.display = "flex";
             } else {
                 btn.style.display = "none";
+                btn.remove(); // Removes the element completely from layout
             }
         };
 
@@ -125,7 +124,7 @@
             audio.loop = true;
         }
 
-        // Overlay Click & Sound Unlock Handler
+        // Entry Click Listener
         const overlay = document.getElementById('overlay');
         const mainCard = document.getElementById('main-card');
 
@@ -137,7 +136,7 @@
             }
         });
 
-        // Falling Particles Canvas
+        // Falling Particle Canvas Engine
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
 
