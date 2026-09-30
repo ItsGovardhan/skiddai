@@ -8,7 +8,7 @@ A minimalist, retro pixel-styled bio profile link page featuring translucent gla
 
 # 📸 Live Preview
 
-> 🔗 **Live Demo:** [View Live Site](https://your-site.vercel.app) *(Replace with your live link)*
+> 🔗 **Live Demo:** [View Live Site](https://skiddai-x48m.vercel.app/) *(Replace with your live link)*
 
 ---
 
