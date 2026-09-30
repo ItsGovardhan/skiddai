@@ -8,7 +8,7 @@ const CONFIG = {
     backgroundUrl: "assets/bg.jpg",
 
     // Background Music (.mp3)
-    musicUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+musicUrl: "assets/music.mp3",
 
     // Custom Badges Next To Username
     badges: [
