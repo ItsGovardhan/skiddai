@@ -64,12 +64,12 @@
         </div>
     </div>
 
-    <!-- Script Configuration -->
+    <!-- Configuration Load -->
     <script src="config.js"></script>
 
     <script>
         const SafeConfig = (typeof CONFIG !== "undefined") ? CONFIG : {
-            username: "skiddai",
+            username: "camel",
             subtitle: "D E V",
             backgroundType: "image",
             backgroundUrl: "assets/bg.jpg",
@@ -78,7 +78,7 @@
             socials: {}
         };
 
-        // Background Initialization
+        // Background Setup
         const bgLayer = document.getElementById('bg-layer');
         if (SafeConfig.backgroundType === "video" && SafeConfig.backgroundUrl) {
             const videoElem = document.createElement('video');
@@ -91,15 +91,14 @@
             bgLayer.appendChild(videoElem);
             videoElem.play().catch(e => console.log(e));
         } else if (SafeConfig.backgroundUrl) {
-            bgLayer.classList.add('img-bg');
             bgLayer.style.backgroundImage = `url('${SafeConfig.backgroundUrl}')`;
         }
 
         // Subtitle & Username
         document.getElementById('overlay-sub').textContent = SafeConfig.subtitle || "";
-        document.getElementById('display-username').textContent = SafeConfig.username || "";
+        document.getElementById('display-username').textContent = SafeConfig.username || "camel";
 
-        // Render Badges
+        // Badges Render
         const badgesContainer = document.getElementById('badges-container');
         if (SafeConfig.badges && Array.isArray(SafeConfig.badges)) {
             SafeConfig.badges.forEach(badgePath => {
@@ -112,7 +111,7 @@
             });
         }
 
-        // Setup Social Buttons
+        // Social Buttons Setup
         const setupSocial = (elementId, linkUrl) => {
             const btn = document.getElementById(elementId);
             if (btn) {
@@ -131,14 +130,14 @@
             setupSocial('btn-instagram', SafeConfig.socials.instagram);
         }
 
-        // Audio Setup
+        // Music
         let audio = null;
         if (SafeConfig.musicUrl && SafeConfig.musicUrl.trim() !== "") {
             audio = new Audio(SafeConfig.musicUrl);
             audio.loop = true;
         }
 
-        // Overlay Click Event
+        // Click Overlay Handler
         const overlay = document.getElementById('overlay');
         const mainCard = document.getElementById('main-card');
 
@@ -150,7 +149,7 @@
             }
         });
 
-        // Snow Canvas Animation
+        // Snow Animation
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
 
