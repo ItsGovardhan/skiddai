@@ -1,50 +1,125 @@
-# 🎮 Social Link Web 
+🎮 Social Link Web Design
 
-A minimalist, retro pixel-styled bio profile link page featuring translucent glassmorphic cards, custom badges, falling particle effects, and background music support.
+A minimalist, retro pixel-styled social bio/link page featuring glassmorphic cards, custom badges, falling particles, background images/videos, and music support.
 
-> **Made by skiddai** ⚡
+«Made by skiddai ⚡»
 
 ---
 
-## ⚡ Quick Customization (`config.js`)
+✨ Features
 
-You do not need to edit any HTML or CSS code to customize your profile. Simply open `config.js` and update your details:
+- 🎨 Retro pixel-style design
+- 🪟 Translucent glassmorphic cards
+- ✨ Falling particle effects
+- 🖼️ Image or video background
+- 🎵 Background music support
+- 🏷️ Custom profile badges
+- 🔗 Social media links
+- ⚙️ Easy configuration through "config.js"
+- 🚀 Easy deployment with Vercel
 
-```javascript
+---
+
+⚡ Quick Customization
+
+You don't need to edit the HTML or CSS.
+
+Simply open "config.js" and change the values:
+
 const CONFIG = {
     // 1. Profile Identity
-    username: "camel",          // Your main handle/display name
-    subtitle: "click me",        // Text shown on the overlay screen
+    username: "camel",
+    subtitle: "click me",
 
-    // 2. Background Settings ("image" or "video")
+    // 2. Background Settings
+    // Use "image" or "video"
     backgroundType: "image",
-    backgroundUrl: "[https://your-image-url.com/bg.jpg](https://your-image-url.com/bg.jpg)", // Local path or web URL
+    backgroundUrl: "https://your-image-url.com/bg.jpg",
 
-    // 3. Audio Track (.mp3 file link)
-    musicUrl: "",
+    // 3. Background Music
+    musicUrl: "https://your-music-url.com/music.mp3",
 
-    // 4. Badges (Icons next to username)
+    // 4. Profile Badges
     badges: [
-        "[https://cdn-icons-png.flaticon.com/512/616/616489.png](https://cdn-icons-png.flaticon.com/512/616/616489.png)",
-        "[https://cdn-icons-png.flaticon.com/512/1828/1828640.png](https://cdn-icons-png.flaticon.com/512/1828/1828640.png)"
+        "https://your-image-url.com/badge1.png",
+        "https://your-image-url.com/badge2.png"
     ],
 
-    // 5. Social Links (Leave as "" to hide a button)
+    // 5. Social Links
+    // Leave "" to hide a button
     socials: {
-        telegram: "[https://t.me/yourusername](https://t.me/yourusername)",
-        discord: "[https://discord.gg/yourinvite](https://discord.gg/yourinvite)",
-        instagram: "[https://instagram.com/yourusername](https://instagram.com/yourusername)"
+        telegram: "https://t.me/yourusername",
+        discord: "https://discord.gg/yourinvite",
+        instagram: "https://instagram.com/yourusername"
     }
 };
-# Deploy Live on Vercel (Free)
-​Go to Vercel.com and log in using Continue with GitHub.
-​Click Add New... > Project.
-​Under Import Git Repository, select your forked repository and click Import.
-​Leave Framework Preset as Other.
-​Click Deploy.
-​💡 Auto-Updates: Whenever you edit your config.js on GitHub, Vercel will automatically re-deploy your website with the new changes!
-# Structure
-├── index.html        # Main layout structure
-├── styles.css        # Pixel styling, glass cards, and animations
-├── config.js         # Config file for user details, badges, and links
-└── README.md         # Documentation and deployment instructions
+
+🖼️ Background
+
+For an image:
+
+backgroundType: "image"
+
+For a video:
+
+backgroundType: "video"
+
+Then add your direct image/video URL:
+
+backgroundUrl: "https://example.com/background.mp4"
+
+🎵 Music
+
+Add a direct ".mp3" URL:
+
+musicUrl: "https://example.com/music.mp3"
+
+Leave it empty if you don't want background music:
+
+musicUrl: ""
+
+🔗 Social Links
+
+Add your social URLs inside "config.js".
+
+To hide a platform, simply leave it empty:
+
+telegram: "",
+discord: "https://discord.gg/example",
+instagram: ""
+
+---
+
+📁 File Structure
+
+├── index.html       # Main page structure
+├── styles.css       # Styling, animations and glass effects
+├── config.js        # Profile, background and social settings
+└── README.md        # Documentation
+
+---
+
+🚀 Deploy on Vercel
+
+1. Go to Vercel and log in with GitHub.
+2. Click Add New → Project.
+3. Select your GitHub repository.
+4. Click Import.
+5. Set Framework Preset to "Other".
+6. Click Deploy.
+
+That's it! Your website will be live.
+
+🔄 Automatic Updates
+
+After connecting your GitHub repository, changes pushed to the repository will automatically trigger a new Vercel deployment.
+
+So if you edit "config.js" and push the changes, your website will update automatically.
+
+---
+
+📜 License
+
+You are free to use and customize this project for your own website.
+
+Made by skiddai ⚡
