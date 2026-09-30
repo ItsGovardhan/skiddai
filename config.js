@@ -8,7 +8,7 @@ const CONFIG = {
     backgroundUrl: "assets/bg.jpg",
 
     // Background Music (.mp3)
-musicUrl: "/assets/music.mp3",
+musicUrl: "assets/music.mp3",
 
     // Custom Badges Next To Username
     badges: [
