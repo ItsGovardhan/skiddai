@@ -14,14 +14,14 @@
     <!-- Snow Particles Canvas -->
     <canvas id="snow-canvas"></canvas>
 
-    <!-- Tap To Enter Screen -->
+    <!-- Tap To Enter Overlay Screen -->
     <div id="overlay">
         <div class="overlay-title" id="overlay-title">click me</div>
         <div class="overlay-sub" id="overlay-sub"></div>
         <div class="tap-hint">+ TAP ANYWHERE</div>
     </div>
 
-    <!-- Main Card Interface -->
+    <!-- Main Profile Card -->
     <div id="main-card">
         <div class="profile-header">
             <span class="username" id="display-username"></span>
@@ -64,11 +64,11 @@
         </div>
     </div>
 
-    <!-- Script config -->
+    <!-- Script Configuration -->
     <script src="config.js"></script>
 
     <script>
-        // Background initialization
+        // Background Initialization
         const bgLayer = document.getElementById('bg-layer');
 
         if (CONFIG.backgroundType === "video") {
@@ -88,7 +88,7 @@
             bgLayer.style.backgroundImage = `url('${CONFIG.backgroundUrl}')`;
         }
 
-        // Username & Subtitle
+        // Subtitle & Username
         document.getElementById('overlay-sub').textContent = CONFIG.subtitle;
         document.getElementById('display-username').textContent = CONFIG.username;
 
@@ -139,7 +139,7 @@
             }
         });
 
-        // Falling Snow Effect
+        // Snow Canvas Animation
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
 
