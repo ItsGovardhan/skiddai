@@ -68,76 +68,82 @@
     <script src="config.js"></script>
 
     <script>
-        // Background Initialization
-        const bgLayer = document.getElementById('bg-layer');
+        // Safely execute setup logic once config is available
+        if (typeof CONFIG !== "undefined") {
+            // Background Initialization
+            const bgLayer = document.getElementById('bg-layer');
 
-        if (CONFIG.backgroundType === "video") {
-            const videoElem = document.createElement('video');
-            videoElem.id = "bg-video";
-            videoElem.src = CONFIG.backgroundUrl;
-            videoElem.autoplay = true;
-            videoElem.loop = true;
-            videoElem.muted = true;
-            videoElem.playsInline = true;
-            videoElem.setAttribute("muted", "");
-            videoElem.setAttribute("playsinline", "");
-            bgLayer.appendChild(videoElem);
-            videoElem.play().catch(e => console.log(e));
-        } else {
-            bgLayer.classList.add('img-bg');
-            bgLayer.style.backgroundImage = `url('${CONFIG.backgroundUrl}')`;
-        }
+            if (CONFIG.backgroundType === "video" && CONFIG.backgroundUrl) {
+                const videoElem = document.createElement('video');
+                videoElem.id = "bg-video";
+                videoElem.src = CONFIG.backgroundUrl;
+                videoElem.autoplay = true;
+                videoElem.loop = true;
+                videoElem.muted = true;
+                videoElem.playsInline = true;
+                videoElem.setAttribute("muted", "");
+                videoElem.setAttribute("playsinline", "");
+                bgLayer.appendChild(videoElem);
+                videoElem.play().catch(e => console.log(e));
+            } else if (CONFIG.backgroundUrl) {
+                bgLayer.classList.add('img-bg');
+                bgLayer.style.backgroundImage = `url('${CONFIG.backgroundUrl}')`;
+            }
 
-        // Subtitle & Username
-        document.getElementById('overlay-sub').textContent = CONFIG.subtitle;
-        document.getElementById('display-username').textContent = CONFIG.username;
+            // Subtitle & Username
+            if (CONFIG.subtitle) document.getElementById('overlay-sub').textContent = CONFIG.subtitle;
+            if (CONFIG.username) document.getElementById('display-username').textContent = CONFIG.username;
 
-        // Render Badges
-        const badgesContainer = document.getElementById('badges-container');
-        if (CONFIG.badges && Array.isArray(CONFIG.badges)) {
-            CONFIG.badges.forEach(badgePath => {
-                if (badgePath && badgePath.trim() !== "") {
-                    const img = document.createElement('img');
-                    img.src = badgePath;
-                    img.className = 'badge-icon';
-                    badgesContainer.appendChild(img);
+            // Render Badges
+            const badgesContainer = document.getElementById('badges-container');
+            if (CONFIG.badges && Array.isArray(CONFIG.badges)) {
+                CONFIG.badges.forEach(badgePath => {
+                    if (badgePath && badgePath.trim() !== "") {
+                        const img = document.createElement('img');
+                        img.src = badgePath;
+                        img.className = 'badge-icon';
+                        badgesContainer.appendChild(img);
+                    }
+                });
+            }
+
+            // Setup Social Buttons safely without removing elements from the DOM
+            const setupSocial = (elementId, linkUrl) => {
+                const btn = document.getElementById(elementId);
+                if (btn) {
+                    if (linkUrl && linkUrl.trim() !== "") {
+                        btn.href = linkUrl;
+                        btn.style.display = "flex";
+                    } else {
+                        btn.style.display = "none";
+                    }
+                }
+            };
+
+            if (CONFIG.socials) {
+                setupSocial('btn-telegram', CONFIG.socials.telegram);
+                setupSocial('btn-discord', CONFIG.socials.discord);
+                setupSocial('btn-instagram', CONFIG.socials.instagram);
+            }
+
+            // Music playback
+            let audio = null;
+            if (CONFIG.musicUrl && CONFIG.musicUrl.trim() !== "") {
+                audio = new Audio(CONFIG.musicUrl);
+                audio.loop = true;
+            }
+
+            const overlay = document.getElementById('overlay');
+            const mainCard = document.getElementById('main-card');
+
+            overlay.addEventListener('click', () => {
+                overlay.classList.add('hidden');
+                mainCard.classList.add('visible');
+                if (audio) {
+                    audio.play().catch(e => console.log(e));
                 }
             });
         }
-
-        // Setup Social Buttons
-        const setupSocial = (elementId, linkUrl) => {
-            const btn = document.getElementById(elementId);
-            if (linkUrl && linkUrl.trim() !== "") {
-                btn.href = linkUrl;
-                btn.style.display = "flex";
-            } else {
-                btn.style.display = "none";
-                btn.remove();
-            }
-        };
-
-        setupSocial('btn-telegram', CONFIG.socials.telegram);
-        setupSocial('btn-discord', CONFIG.socials.discord);
-        setupSocial('btn-instagram', CONFIG.socials.instagram);
-
-        // Music playback
-        let audio = null;
-        if (CONFIG.musicUrl && CONFIG.musicUrl.trim() !== "") {
-            audio = new Audio(CONFIG.musicUrl);
-            audio.loop = true;
-        }
-
-        const overlay = document.getElementById('overlay');
-        const mainCard = document.getElementById('main-card');
-
-        overlay.addEventListener('click', () => {
-            overlay.classList.add('hidden');
-            mainCard.classList.add('visible');
-            if (audio) {
-                audio.play().catch(e => console.log(e));
-            }
-        });
 
         // Snow Canvas Animation
         const canvas = document.getElementById('snow-canvas');
