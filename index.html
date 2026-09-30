@@ -63,7 +63,7 @@
 
     <!-- Main Engine Logic -->
     <script>
-        // Background System (Image or Video)
+        // Load Background (Handles Video or Image)
         const bgLayer = document.getElementById('bg-layer');
 
         if (CONFIG.backgroundType === "video") {
@@ -74,30 +74,36 @@
             videoElem.loop = true;
             videoElem.muted = true;
             videoElem.playsInline = true;
+            
+            // Try playing video explicitly
+            videoElem.play().catch(err => console.log("Video autoplay log:", err));
             bgLayer.appendChild(videoElem);
         } else {
             bgLayer.classList.add('img-bg');
             bgLayer.style.backgroundImage = `url('${CONFIG.backgroundUrl}')`;
         }
 
-        // DOM Populator
+        // Set Texts
         document.getElementById('overlay-sub').textContent = CONFIG.subtitle;
         document.getElementById('display-username').textContent = CONFIG.username;
 
-        // Render Badges Dynamic List
+        // Load Badges Safely
         const badgesContainer = document.getElementById('badges-container');
-        if (CONFIG.badges && CONFIG.badges.length > 0) {
-            CONFIG.badges.forEach(badgeUrl => {
-                if (badgeUrl && badgeUrl.trim() !== "") {
+        if (CONFIG.badges && Array.isArray(CONFIG.badges)) {
+            CONFIG.badges.forEach(badgePath => {
+                if (badgePath && badgePath.trim() !== "") {
                     const img = document.createElement('img');
-                    img.src = badgeUrl;
+                    img.src = badgePath;
                     img.className = 'badge-icon';
+                    img.onerror = () => {
+                        console.warn("Could not load badge image at path:", badgePath);
+                    };
                     badgesContainer.appendChild(img);
                 }
             });
         }
 
-        // Render Social Buttons (Hides automatically if link string is empty "")
+        // Setup Social Buttons
         const setupSocial = (elementId, linkUrl) => {
             const btn = document.getElementById(elementId);
             if (linkUrl && linkUrl.trim() !== "") {
@@ -131,7 +137,7 @@
             }
         });
 
-        // Snow / Particle System
+        // Falling Particles Canvas
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -194,4 +200,3 @@
     </script>
 </body>
 </html>
-
